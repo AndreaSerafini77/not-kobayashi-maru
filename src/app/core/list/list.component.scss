@@ -1,0 +1,51 @@
+.skeleton-card {
+    height: 5em;
+    transition: all 200ms ease-in-out;
+    position: relative;
+    background-color: #eaeaea;
+  }
+
+  .skeleton-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-10%);
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+    animation: load 1s infinite;
+  }
+
+  .loader {
+    width: 50px;
+  }
+
+  .list {
+    overflow: scroll;
+    height: 60vh;
+    border-radius: 1rem;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
+  .short-list {
+    overflow: scroll;
+    height: 20vh;
+    border-radius: 1rem;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
+  @keyframes load {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+.little-sloth {
+    width: 400px;
+    &.inverted {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: invert(1);
+    }
+}

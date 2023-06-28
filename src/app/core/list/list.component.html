@@ -1,0 +1,24 @@
+<div *ngIf="apiError" class="p-3 text-center">
+    <img class="little-sloth" src="../../../assets/sloth.png">
+    <h1>Something went wrong..</h1>
+    <span class="mat-caption">I'd like to say "Try again later" but this is just a little project. Nothing will
+        change.</span>
+</div>
+<ng-container *ngIf="(posts$ | async) as posts">
+    <div class="mat-caption text-right">Number of posts:&nbsp;{{posts.length}}</div>
+    <div [ngClass]="{'list': posts?.length > 10, 'short-list': posts?.length <= 10}"
+        (scroll)="onScroll($event)" class="list-padding">
+        <div *ngIf="posts.length > 0; else noData" class="box justify-content-start">
+            <mat-card *ngFor="let post of (posts)" (click)="openDialog(post)">{{post?.title}}</mat-card>
+        </div>
+    </div>
+    <div class="text-center">
+        <img *ngIf="isLoading" class="loader" src="../../../assets/giphy.webp">
+    </div>
+    <ng-template #noData>
+        <div class="p-3 text-center">
+            <img class="little-sloth inverted" src="../../../assets/sloth.png">
+            <h1>There is nothing here..</h1>
+        </div>
+    </ng-template>
+</ng-container>
