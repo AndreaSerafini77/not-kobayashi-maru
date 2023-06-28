@@ -1,11 +1,11 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { MatDialog } from "@angular/material/dialog";
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { Post } from "src/app/models/post.model";
-import { PostsService } from "src/app/services/posts.service";
-import { DetailBottomSheet } from "../detail-bottom-sheet/detail-bottom-sheet.component";
-import { DetailModal, ModalData } from "../detail-modal/detail-modal.component";
+import { Component, HostListener, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Post } from 'src/app/models/post.model';
+import { PostsService } from 'src/app/services/posts.service';
+import { DetailBottomSheet } from '../detail-bottom-sheet/detail-bottom-sheet.component';
+import { DetailModal, ModalData } from '../detail-modal/detail-modal.component';
 import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -26,9 +26,9 @@ export class ListComponent implements OnInit {
     offset = 10;
 
     constructor(
-        public _dialog: MatDialog,
-        private _postsService: PostsService,
-        private _bottomSheet: MatBottomSheet) {
+        public dialog: MatDialog,
+        private postsService: PostsService,
+        private bottomSheet: MatBottomSheet) {
 
         this.setWindowSize(document.body.clientWidth);
     }
@@ -45,7 +45,7 @@ export class ListComponent implements OnInit {
             switchMap(() =>
                 this.foundEnd ?
                     of(null) :
-                    this._postsService.getPosts(this.start, this.limit)
+                    this.postsService.getPosts(this.start, this.limit)
                         .pipe(
                             catchError((err) => {
                                 console.log(err);
@@ -67,7 +67,7 @@ export class ListComponent implements OnInit {
         this.scrollDown$.next();
     }
 
-    onScroll(event: any) {
+    onScroll(event: any): void {
         if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight && !this.isLoading) {
             this.scrollDown$.next();
         }
@@ -93,11 +93,11 @@ export class ListComponent implements OnInit {
         const modalData: ModalData = { id: post.id, title: post.title, body: post.body };
 
         if (this.windowSize === 'sm') {
-            this._bottomSheet.open(DetailBottomSheet, {
+            this.bottomSheet.open(DetailBottomSheet, {
                 data: modalData
             });
         } else {
-            this._dialog.open(DetailModal, {
+            this.dialog.open(DetailModal, {
                 data: modalData
             });
         }

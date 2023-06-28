@@ -8,11 +8,11 @@ import { Post } from '../models/post.model';
     providedIn: 'root'
 })
 export class PostsService {
-    constructor(private _http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
     getPosts(start?: number, limit?: number): Observable<Array<Post>> {
         let url = `https://jsonplaceholder.typicode.com/posts`;
-        let urlParams = [];
+        const urlParams = [];
         if (!_.isNil(start)) {
             urlParams.push(`_start=${start}`);
         }
@@ -24,6 +24,6 @@ export class PostsService {
             url += '?' + urlParams.join('&');
         }
 
-        return this._http.get(url) as Observable<Array<Post>>;
+        return this.http.get(url) as Observable<Array<Post>>;
     }
 }
