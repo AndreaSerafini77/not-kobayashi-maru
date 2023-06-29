@@ -38,7 +38,6 @@ export class ListComponent implements OnInit, OnDestroy {
         private bottomSheet: MatBottomSheet) {
 
         this.setWindowSize(document.body.clientWidth);
-        this.isListScrollable = this.checkIfScrollable();
     }
 
     @HostListener('window:resize', ['$event'])
@@ -48,6 +47,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.isListScrollable = this.checkIfScrollable();
         this.posts$ = this.scrollDown$.pipe(
             tap(() => (this.isLoading = this.foundEnd ? false : true)),
             delay(2000),
@@ -96,7 +96,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
     checkIfScrollable(): boolean {
         var div = document.getElementById('posts_div');
-        return div ? div.scrollHeight <= div.clientHeight : false;
+        return div.scrollHeight <= div.clientHeight;
     }
 
 
