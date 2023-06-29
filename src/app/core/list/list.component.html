@@ -6,8 +6,8 @@
 </div>
 <ng-container *ngIf="(posts$ | async) as posts">
     <div class="mat-caption text-right">Number of posts:&nbsp;{{posts.length}}</div>
-    <div (scroll)="onScroll($event)" class="list list-padding">
-        <div *ngIf="posts.length > 0; else noData" class="box justify-content-start">
+    <div *ngIf="posts.length > 0; else noData" (scroll)="onScroll($event)" class="list list-padding">
+        <div class="box justify-content-start">
             <mat-card *ngFor="let post of (posts)" (click)="openDialog(post)">{{post?.title}}</mat-card>
         </div>
     </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Post } from '../models/post.model';
 
 @Injectable({

@@ -8,4 +8,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Not a Kobayashi-Maru (apparently)';
   foundEnd = false;
+  apiError = false;
 }

@@ -15,6 +15,8 @@ import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit {
     @Output() foundTotalElements = new EventEmitter();
+    @Output() somethingWrong = new EventEmitter();
+
     posts$: Observable<Array<Post>>;
     totalPosts: Array<Post> = [];
     foundEnd = false;
@@ -51,6 +53,7 @@ export class ListComponent implements OnInit {
                             catchError((err) => {
                                 console.log(err);
                                 this.apiError = true;
+                                this.somethingWrong.emit(true);
                                 throw new Error(err);
                             })
                         )

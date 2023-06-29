@@ -4,10 +4,10 @@
 
 <div class="content" role="main">
 
-  <list (foundTotalElements)="foundEnd = $event"></list>
+  <list (foundTotalElements)="foundEnd = $event" (somethingWrong)="apiError = $event"></list>
 
   <img id="custom-background" src="../assets/background.jpg">
-  <div class="floating-sloth">
+  <div *ngIf="!apiError" class="floating-sloth">
     <img class="little-sloth" [src]="foundEnd ? '../../../assets/happy_sloth.png' : '../../../assets/sloth.png'">
   </div>
 
