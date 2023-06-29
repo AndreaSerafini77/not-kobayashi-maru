@@ -52,13 +52,13 @@ body {
   padding: 2rem 3rem;
 }
 
-.content {
-  display: flex;
-  margin: 82px auto 32px;
-  padding: 0 16px;
-  max-width: 60vw;
-  flex-direction: column;
-  align-items: center;
+.little-sloth {
+  width: 400px;
+  &.inverted {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: invert(1);
+  }
 }
 
 @media screen and (max-width: 479px) {
@@ -74,26 +74,5 @@ body {
   .content {
     margin: 82px 10px 32px 10px;
     max-width: 90vw;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .card-container > *:not(.circle-link),
-  .terminal {
-    width: 100%;
-  }
-
-  .card:not(.highlight-card) {
-    height: 16px;
-    margin: 8px 0;
-  }
-
-  .card.highlight-card span {
-    margin-left: 72px;
-  }
-
-  svg#rocket-smoke {
-    right: 120px;
-    transform: rotate(-5deg);
   }
 }

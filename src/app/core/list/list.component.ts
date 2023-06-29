@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -14,6 +14,7 @@ import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
     styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+    @Output() foundTotalElements = new EventEmitter();
     posts$: Observable<Array<Post>>;
     totalPosts: Array<Post> = [];
     foundEnd = false;
@@ -22,8 +23,8 @@ export class ListComponent implements OnInit {
     windowSize: 'xl' | 'sm' | 'md' | 'lg' = null;
     apiError = false;
     start = 0;
-    limit = 10;
-    offset = 10;
+    limit = 20;
+    offset = 20;
 
     constructor(
         public dialog: MatDialog,
@@ -55,11 +56,16 @@ export class ListComponent implements OnInit {
                         )
             ),
             map((posts: Post[]) => {
-                const result = posts ? posts.concat(this.totalPosts) : this.totalPosts;
+                const result = posts ? this.totalPosts.concat(posts) : this.totalPosts;
                 if (posts) this.totalPosts.push(...posts);
                 this.start = this.start + this.offset;
+                this.limit = 10;
+                this.offset = 10;
                 this.isLoading = false;
-                if (posts?.length === 0) this.foundEnd = true;
+                if (posts?.length === 0) {
+                    this.foundTotalElements.emit(true);
+                    this.foundEnd = true;
+                }
                 return result;
             })
         );

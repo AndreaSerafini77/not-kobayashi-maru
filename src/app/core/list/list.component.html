@@ -6,13 +6,12 @@
 </div>
 <ng-container *ngIf="(posts$ | async) as posts">
     <div class="mat-caption text-right">Number of posts:&nbsp;{{posts.length}}</div>
-    <div [ngClass]="{'list': posts?.length > 10, 'short-list': posts?.length <= 10}"
-        (scroll)="onScroll($event)" class="list-padding">
+    <div (scroll)="onScroll($event)" class="list list-padding">
         <div *ngIf="posts.length > 0; else noData" class="box justify-content-start">
             <mat-card *ngFor="let post of (posts)" (click)="openDialog(post)">{{post?.title}}</mat-card>
         </div>
     </div>
-    <div class="text-center">
+    <div class="text-center pt-1">
         <img *ngIf="isLoading" class="loader" src="../../../assets/giphy.webp">
     </div>
     <ng-template #noData>

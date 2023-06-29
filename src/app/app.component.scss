@@ -1,46 +1,71 @@
 :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .toolbar {
-    padding-left: 2rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #55b987;
-    color: white;
-    font-weight: 600;
-  }
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #55b987;
+  color: white;
+  font-weight: 600;
+}
 
-  .toolbar img {
-    margin: 0 16px;
-  }
+.toolbar-content {
+  max-width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 16px;
-  }
+.content {
+  display: flex;
+  margin: 82px auto 32px;
+  padding: 0 16px;
+  max-width: 60vw;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .toolbar #twitter-logo:hover {
-    opacity: 0.8;
-  }
+img#custom-background {
+  position: fixed;
+  bottom: -160px;
+  left: 0px;
+  opacity: 0.8;
+  max-height: 100vh;
+  top: 0px;
+  z-index: -10;
+  width: 1920px;
+}
 
-  img#custom-background {
-    position: fixed;
-    bottom: -160px;
-    left: 0px;
-    opacity: 0.8;
-    max-height: 100vh;
-    top: 0px;
-    z-index: -10;
-    width: 1920px;
-  }
+.floating-sloth {
+  z-index: -10;
+  position: fixed;
+  bottom: -100px;
+  left: 40vw;
+  overflow: hidden;
+	transform: translatey(0px);
+	animation: float 6s ease-in-out infinite;
+}
+
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
