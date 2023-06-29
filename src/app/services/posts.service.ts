@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { Post } from '../models/post.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class PostsService {
     constructor(private http: HttpClient) { }
 
     getPosts(start?: number, limit?: number): Observable<Array<Post>> {
-        let url = `https://jsonplaceholder.typicode.com/posts`;
+        let url = environment.apiUrl + `posts`;
         const urlParams = [];
         if (!_.isNil(start)) {
             urlParams.push(`_start=${start}`);

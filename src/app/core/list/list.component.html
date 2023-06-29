@@ -6,13 +6,17 @@
 </div>
 <ng-container *ngIf="(posts$ | async) as posts">
     <div class="mat-caption text-right">Number of posts:&nbsp;{{posts.length}}</div>
-    <div *ngIf="posts.length > 0; else noData" (scroll)="onScroll($event)" class="list list-padding">
+    <div id="posts_div" *ngIf="posts.length > 0; else noData" (scroll)="onScroll($event)" class="list list-padding">
         <div class="box justify-content-start">
-            <mat-card *ngFor="let post of (posts)" (click)="openDialog(post)">{{post?.title}}</mat-card>
+            <mat-card *ngFor="let post of (posts)" class="pointer" (click)="openDialog(post)">{{post?.title}}</mat-card>
+        </div>
+        <div class="text-center" *ngIf="isListScrollable && !isLoading && !foundEnd">
+            <mat-icon [matTooltip]="tooltipText"
+            matTooltipPosition="right" (click)="refresh()" class="pointer">autorenew</mat-icon>
         </div>
     </div>
-    <div class="text-center pt-1">
-        <img *ngIf="isLoading" class="loader" src="../../../assets/giphy.webp">
+    <div *ngIf="isLoading" class="text-center pt-1">
+        <img class="loader" src="../../../assets/giphy.webp">
     </div>
     <ng-template #noData>
         <div class="p-3 text-center">

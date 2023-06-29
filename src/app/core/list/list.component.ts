@@ -1,19 +1,19 @@
-import { Component, HostListener, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, HostListener, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostsService } from 'src/app/services/posts.service';
 import { DetailBottomSheet } from '../detail-bottom-sheet/detail-bottom-sheet.component';
 import { DetailModal, ModalData } from '../detail-modal/detail-modal.component';
-import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, delay, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
     @Output() foundTotalElements = new EventEmitter();
     @Output() somethingWrong = new EventEmitter();
 
@@ -28,17 +28,23 @@ export class ListComponent implements OnInit {
     limit = 20;
     offset = 20;
 
+    isListScrollable = false;
+    tooltipText = 'If the client display is too wide and the container element has no scroll, it can trigger the refresh through this button';
+    private destroy$: Subject<void> = new Subject();
+
     constructor(
         public dialog: MatDialog,
         private postsService: PostsService,
         private bottomSheet: MatBottomSheet) {
 
         this.setWindowSize(document.body.clientWidth);
+        this.isListScrollable = this.checkIfScrollable();
     }
 
     @HostListener('window:resize', ['$event'])
     onResize(event?): void {
         this.setWindowSize(event.target.innerWidth);
+        this.isListScrollable = this.checkIfScrollable();
     }
 
     ngOnInit(): void {
@@ -50,8 +56,8 @@ export class ListComponent implements OnInit {
                     of(null) :
                     this.postsService.getPosts(this.start, this.limit)
                         .pipe(
+                            takeUntil(this.destroy$),
                             catchError((err) => {
-                                console.log(err);
                                 this.apiError = true;
                                 this.somethingWrong.emit(true);
                                 throw new Error(err);
@@ -77,9 +83,20 @@ export class ListComponent implements OnInit {
     }
 
     onScroll(event: any): void {
-        if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight && !this.isLoading) {
+        if (Math.ceil(event.target.offsetHeight + event.target.scrollTop) >= event.target.scrollHeight && !this.isLoading) {
             this.scrollDown$.next();
         }
+    }
+
+    refresh(): void {
+        if (!this.isLoading && !this.foundEnd) {
+            this.scrollDown$.next();
+        }
+    }
+
+    checkIfScrollable(): boolean {
+        var div = document.getElementById('posts_div');
+        return div ? div.scrollHeight <= div.clientHeight : false;
     }
 
 
@@ -110,5 +127,10 @@ export class ListComponent implements OnInit {
                 data: modalData
             });
         }
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

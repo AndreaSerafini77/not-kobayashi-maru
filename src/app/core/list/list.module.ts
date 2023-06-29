@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { DetailModal } from '../detail-modal/detail-modal.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { DetailBottomSheet } from '../detail-bottom-sheet/detail-bottom-sheet.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -15,6 +17,6 @@ import { DetailBottomSheet } from '../detail-bottom-sheet/detail-bottom-sheet.co
         DetailBottomSheet
     ],
     exports: [ListComponent],
-    imports: [CommonModule, MatBottomSheetModule, MatButtonModule, MatCardModule, MatDialogModule]
+    imports: [CommonModule, MatIconModule, MatTooltipModule, MatBottomSheetModule, MatButtonModule, MatCardModule, MatDialogModule]
 })
 export class ListModule { }
