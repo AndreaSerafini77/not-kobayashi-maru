@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Node
 
-I used the 16.20 version of Node
+I used the 16.20 version of Node (but it runs with >14)
 
 ## Install Dependencies
 
