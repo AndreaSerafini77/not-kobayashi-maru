@@ -6,7 +6,8 @@ import { Post } from 'src/app/models/post.model';
 import { PostsService } from 'src/app/services/posts.service';
 import { DetailBottomSheet } from '../detail-bottom-sheet/detail-bottom-sheet.component';
 import { DetailModal, ModalData } from '../detail-modal/detail-modal.component';
-import { catchError, delay, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, delay, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'list',
@@ -48,6 +49,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.isListScrollable = this.checkIfScrollable();
+        
         this.posts$ = this.scrollDown$.pipe(
             tap(() => (this.isLoading = this.foundEnd ? false : true)),
             delay(2000),
@@ -64,9 +66,10 @@ export class ListComponent implements OnInit, OnDestroy {
                             })
                         )
             ),
+            filter((posts: Post[]) => !_.isNil(posts)),
             map((posts: Post[]) => {
-                const result = posts ? this.totalPosts.concat(posts) : this.totalPosts;
-                if (posts) this.totalPosts.push(...posts);
+                const result = this.totalPosts.concat(posts);
+                this.totalPosts.push(...posts);
                 this.start = this.start + this.offset;
                 this.limit = 10;
                 this.offset = 10;
@@ -78,8 +81,6 @@ export class ListComponent implements OnInit, OnDestroy {
                 return result;
             })
         );
-
-        this.scrollDown$.next();
     }
 
     onScroll(event: any): void {
