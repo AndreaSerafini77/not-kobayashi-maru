@@ -24,6 +24,6 @@ Try breaking the API url for the error message
 
 ## Fun fact
 
-I would have loved to use ngx-infinite-scroll but it didn't collaborate with the angular/core, angular/cli, webpcack, babel, node.js and maybe even with the operating system I actually have on my Mac. So I decided to create a little silly infinite-scroll by myself.
+I would have loved to use ngx-infinite-scroll but it didn't collaborate with the angular/core, angular/cli, webpack, babel, node.js and maybe even with the operating system I actually have on my Mac. So I decided to create a little silly infinite-scroll by myself.
 It is not perfect, but it works 👍
 
