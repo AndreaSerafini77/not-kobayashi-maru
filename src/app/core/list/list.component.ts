@@ -29,7 +29,7 @@ export class ListComponent implements OnInit, OnDestroy {
     limit = 20;
     offset = 20;
 
-    isListScrollable = false;
+    isListNotScrollable = false;
     tooltipText = 'If the client display is too wide and the container element has no scroll, it can trigger the refresh through this button';
     private destroy$: Subject<void> = new Subject();
 
@@ -44,12 +44,12 @@ export class ListComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event?): void {
         this.setWindowSize(event.target.innerWidth);
-        this.isListScrollable = this.checkIfScrollable();
+        this.isListNotScrollable = this.checkIfNotScrollable();
     }
 
     ngOnInit(): void {
-        this.isListScrollable = this.checkIfScrollable();
-        
+        this.isListNotScrollable = this.checkIfNotScrollable();
+
         this.posts$ = this.scrollDown$.pipe(
             tap(() => (this.isLoading = this.foundEnd ? false : true)),
             delay(2000),
@@ -95,7 +95,7 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
-    checkIfScrollable(): boolean {
+    checkIfNotScrollable(): boolean {
         var div = document.getElementById('posts_div');
         return div.scrollHeight <= div.clientHeight;
     }
